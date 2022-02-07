@@ -1,0 +1,503 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={STA108 Project - A Case Study of the Effect of Pollution on Mortality},
+            pdfauthor={Chris Cheng, Richard Takiar, Truc Le},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{STA108 Project - A Case Study of the Effect of Pollution on Mortality}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Chris Cheng, Richard Takiar, Truc Le}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{8/1/2019}
+
+
+\begin{document}
+\maketitle
+
+Our data observe how the rate of mortality in a city responds to the
+variables such as annual precipitation, education level, percentage of
+nonwhite individuals, percentage of poor people, pollution of nitrogen
+oxides, and sulphur dioxide. Our goal of the analysis is to fit a
+regression model that best represents the trends of the data.
+
+\subsubsection{\texorpdfstring{\textbf{Preliminary Data
+Summary}}{Preliminary Data Summary}}\label{preliminary-data-summary}
+
+Summary of Transformed Data:
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+Predictor & Estimate & Std. Error & t value &
+Pr(\textgreater{}\tabularnewline
+\midrule
+\endhead
+(Intercept) & 980.475 & 141.9266 & 6.908 & 6.33E-09\tabularnewline
+PRECIP & 2.3748 & 0.6709 & 3.54 & 0.000844\tabularnewline
+EDUC & -19.1004 & 7.6787 & -2.487 & 0.016048\tabularnewline
+NONWHITE & 49.9051 & 11.3256 & 4.406 & 5.15E-05\tabularnewline
+POOR & -31.0975 & 34.5908 & -0.899 & 0.372713\tabularnewline
+NOX & 10.1044 & 7.1973 & 1.404 & 0.166178\tabularnewline
+SO2 & 8.0315 & 5.6263 & 1.427 & 0.159305\tabularnewline
+\bottomrule
+\end{longtable}
+
+ANOVA Table of Transformed Data:
+
+\begin{longtable}[]{@{}llllll@{}}
+\toprule
+Predictor & df & SS & MS & F value & P-val\tabularnewline
+\midrule
+\endhead
+PRECIP & 1 & 59256 & 59256 & 45.6291 & 1.12E-08\tabularnewline
+EDUC & 1 & 20492 & 20492 & 15.78 & 0.0002161\tabularnewline
+NONWHITE & 1 & 51678 & 51678 & 39.794 & 5.83E-08\tabularnewline
+POOR & 1 & 7391 & 7391 & 5.6911 & 0.0206571\tabularnewline
+NOX & 1 & 17982 & 17982 & 13.8469 & 0.0004808\tabularnewline
+SO2 & 1 & 2646 & 2646 & 2.0377 & 0.1593045\tabularnewline
+Residuals & 53 & 68828 & 1299 & - & -\tabularnewline
+\bottomrule
+\end{longtable}
+
+\paragraph{Full Regression Model Estimated Beta Coefficients (Rounded to
+4 decimal
+points)}\label{full-regression-model-estimated-beta-coefficients-rounded-to-4-decimal-points}
+
+The regression model fit here is as follows:
+\[\LARGE Y_i=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+\beta_4X_4+\beta_5X_5+\beta_6X_6+\varepsilon\]
+
+\begin{longtable}[]{@{}lllllll@{}}
+\toprule
+Intercept & PRECIP & EDUC & NONWHITE & POOR & NOX & SO2\tabularnewline
+\midrule
+\endhead
+980.475 & 2.375 & -19.100 & 49.905 & -31.098 & 10.104 &
+8.031\tabularnewline
+\bottomrule
+\end{longtable}
+
+The estimated regression formation equation is therefore as follows:
+\[\large \hat{Y} = 980.475+2.375X_1-19.100X_2+49.905X_3-31.098X_4+10.104X_5+8.031X_6\]
+
+\subsubsection{\texorpdfstring{\textbf{Model
+Diagnostics}}{Model Diagnostics}}\label{model-diagnostics}
+
+\paragraph{QQplot of the residuals}\label{qqplot-of-the-residuals}
+
+\subsubsection{NONWHITE Data Non-linear
+Transformation}\label{nonwhite-data-non-linear-transformation}
+
+We believe that the matrix plot of Mortality (Y) vs.~NONWHITE (X)
+appears to look nonlinear and may be better fitted with a polynomial
+regression model.
+
+\subsubsection{SO2 Data Non-Linear
+Transformation}\label{so2-data-non-linear-transformation}
+
+We believe that the matrix plot of Mortality (Y) vs.~NONWHITE (X)
+appears to look nonlinear and may be better fitted with a polynomial
+regression model.
+
+\subsubsection{Fit New Model with Nonlinear
+Terms}\label{fit-new-model-with-nonlinear-terms}
+
+\(\ Y = 1156.7132 \ + 2.1021X_1 \ -19.2041X_2 \ + 53.9390X_3 \ + 15.4809X_3^2 \ -44.7977X_4 \ + 7.7489X_5 \ + 9.0978X_6 \ + 0.3558X_6^2 \ + \epsilon\)
+
+\subsubsection{Model Selection
+Procedure}\label{model-selection-procedure}
+
+As a result of selecting the most appropriate model for our transformed
+data, we ran the default forward selection and backward elimination as
+well as the stepwise versions and all subsets regression. From these
+procedures we found that nonlinear predictors, SO2 and NONWHITE were not
+significant in predicting mortality.
+
+Best model has Predictors 1, 2, 5, 7 which is PRECIP, EDUC, x\_nonw,
+x\_so2 with Mallow's \(C_p\) of \(4.3329\).
+
+There is a \(\Large 1.60\%\) reduction in residual sum of squares when
+adding a quadratic term for data on the population percentage in 1960
+that is nonwhite to a model containing the linear term for data on said
+population percentage, the linear term for data on SO2 pollution
+potential, the mean annual precipitation, and the median number of
+school years completed by persons aged \(25\) or older.
+
+There is a \(\Large 0.20\%\) reduction in residual sum of squares when
+adding a quadratic term for data on the relative pollution potential of
+sulphur dioxide to a model containing the linear term for data on said
+relative pollution potential, the mean annual precipitation, and the
+median number of school years completed by persons aged \(25\) or older.
+
+\subsubsection{Conclusion}\label{conclusion}
+
+All of the model selection techniques result with the same final model,
+Y \textasciitilde{} PRECIP + EDUC + x\_nonwhite + x\_so2. We first had
+to transform the nitrogen oxide and sulphur dioxide predictors using the
+natural log function and the nonwhite and poor predictors using the cube
+root function. We found that the percentage of nonwhite people in the
+population and pollution of SO\_2 predictor variables were quadratic in
+nature in how they related to mortality by observing the scatter plot
+matrix and residuals vs predictor plots. We preformed diagnostics on
+that transformed data and observed that the fitted Y values against the
+Y values plot is approximately linear which tells us that there is not
+much error between our observed data and our regression model. In our
+residual vs fitted Y values plot, histogram of residuals, and QQ plot we
+observed that our distribution of errors is normal.
+
+\section{R Appendix}\label{r-appendix}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(leaps)}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(corrplot)}
+\KeywordTok{library}\NormalTok{(gridExtra)}
+\KeywordTok{library}\NormalTok{(xtable)}
+\CommentTok{# import the dataset }
+\NormalTok{Mortality <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/Desktop/mortality.csv"}\NormalTok{)}
+\KeywordTok{View}\NormalTok{(Mortality)}
+
+\CommentTok{# reorder the response variable (Y) to the first column}
+\NormalTok{Mortality <-}\StringTok{ }\KeywordTok{select}\NormalTok{(Mortality, MORTALITY, }\KeywordTok{everything}\NormalTok{())}
+
+\CommentTok{# obtain the matrix plot of the untransformed dataset}
+\CommentTok{#pdf(file="Rplot2.pdf", paper = "a4r", width = 40)}
+\KeywordTok{plot}\NormalTok{(Mortality, }\DataTypeTok{lower.panel=}\OtherTok{NULL}\NormalTok{)}
+\CommentTok{#dev.off()}
+\CommentTok{# transform the X variables NOx and SO2 with natural log}
+\CommentTok{# transform the X variables NONWHITE and POOR with cube root}
+\NormalTok{Mortality.trans <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(Mortality, }\DataTypeTok{NOX =} \KeywordTok{log}\NormalTok{(NOX), }\DataTypeTok{SO2 =} \KeywordTok{log}\NormalTok{(SO2),}
+                         \DataTypeTok{NONWHITE =}\NormalTok{ NONWHITE}\OperatorTok{^}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{), }\DataTypeTok{POOR =}\NormalTok{ POOR}\OperatorTok{^}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{))}
+
+\CommentTok{# re-plot the matrix plot of the transformed dataset}
+\CommentTok{#pdf(file="Rplot_trans.pdf", paper = "a4r", width = 40)}
+\KeywordTok{plot}\NormalTok{(Mortality.trans, }\DataTypeTok{lower.panel=}\OtherTok{NULL}\NormalTok{)}
+\CommentTok{#dev.off()}
+
+\NormalTok{Mortality.corr <-}\StringTok{ }\NormalTok{Mortality.trans[,}\OperatorTok{-}\DecValTok{8}\NormalTok{]}
+\NormalTok{M <-}\StringTok{ }\KeywordTok{cor}\NormalTok{(Mortality.corr)}
+\KeywordTok{corrplot}\NormalTok{(M, }\DataTypeTok{method=}\StringTok{"number"}\NormalTok{, }\DataTypeTok{type=}\StringTok{"upper"}\NormalTok{)}
+
+\NormalTok{full.model <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\NormalTok{., }\DataTypeTok{data=}\NormalTok{Mortality.corr); full.model}
+\NormalTok{null.model <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\DecValTok{1}\NormalTok{, }\DataTypeTok{data=}\NormalTok{Mortality.corr); null.model}
+\KeywordTok{xtable}\NormalTok{(}\KeywordTok{anova}\NormalTok{(null.model, full.model))}
+
+\KeywordTok{xtable}\NormalTok{(}\KeywordTok{summary}\NormalTok{(full.model))}
+\CommentTok{# plot Y values against fitted Y-values}
+\NormalTok{p.orig.}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{MORTALITY,}
+                           \DataTypeTok{y=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{fitted.values)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Fitted Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Y values against fitted Y values"}\NormalTok{)}
+
+\CommentTok{# plot residuals against fitted Y-values}
+\NormalTok{p.orig.}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{fitted.values,}
+                           \DataTypeTok{y=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{  }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Fitted Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against fitted Y values"}\NormalTok{)}
+
+\CommentTok{# plot residuals against independent variables }
+\NormalTok{p.orig.}\DecValTok{3}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{PRECIP,}
+                           \DataTypeTok{y=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{  }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Mean Annual Precipitation (in inches)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Mean}\CharTok{\textbackslash{}n}\StringTok{ Annual Precipitation"}\NormalTok{)}
+
+\NormalTok{p.orig.}\DecValTok{4}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{EDUC,}
+                           \DataTypeTok{y=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{  }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Median Number school years completed}\CharTok{\textbackslash{}n}\StringTok{ by persons age 25 or over"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Median Number}\CharTok{\textbackslash{}n}\StringTok{ School Years completed by}\CharTok{\textbackslash{}n}\StringTok{ Persons 25 or older"}\NormalTok{)}
+
+\NormalTok{p.orig.}\DecValTok{5}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{NONWHITE,}
+                           \DataTypeTok{y=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{  }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Percentage of Population that}\CharTok{\textbackslash{}n}\StringTok{ is Nonwhite (in 1960)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Nonwhite}\CharTok{\textbackslash{}n}\StringTok{ Population Proportion"}\NormalTok{)}
+
+\NormalTok{p.orig.}\DecValTok{6}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{POOR,}
+                           \DataTypeTok{y=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{  }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Percentage of households with}\CharTok{\textbackslash{}n}\StringTok{ annual income below $3000 (in 1960)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Proportion of}\CharTok{\textbackslash{}n}\StringTok{ Households with under $3000}\CharTok{\textbackslash{}n}\StringTok{ annual income"}\NormalTok{)}
+
+\NormalTok{p.orig.}\DecValTok{7}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{NOX,}
+                           \DataTypeTok{y=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{  }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Relative Pollution Potential}\CharTok{\textbackslash{}n}\StringTok{ of Nitrogen Oxides"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Relative}\CharTok{\textbackslash{}n}\StringTok{ Pollution Potential of}\CharTok{\textbackslash{}n}\StringTok{ Nitrogen Oxides"}\NormalTok{)}
+
+\NormalTok{p.orig.}\DecValTok{8}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{SO2,}
+                           \DataTypeTok{y=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{  }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Relative Pollution Potential of}\CharTok{\textbackslash{}n}\StringTok{ Sulphur Dioxide"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Relative}\CharTok{\textbackslash{}n}\StringTok{ Pollution Potential of}\CharTok{\textbackslash{}n}\StringTok{ Sulphur Dioxide"}\NormalTok{)}
+
+\CommentTok{# plot histogram of residuals}
+\NormalTok{p.orig.}\DecValTok{9}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{full.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{10}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Histogram of Residuals of Mortality"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Residuals (in deaths per 100,000 population)"}\NormalTok{)}
+  
+
+\KeywordTok{grid.arrange}\NormalTok{(p.orig.}\DecValTok{1}\NormalTok{, p.orig.}\DecValTok{2}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{grid.arrange}\NormalTok{(p.orig.}\DecValTok{3}\NormalTok{, p.orig.}\DecValTok{4}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{grid.arrange}\NormalTok{(p.orig.}\DecValTok{5}\NormalTok{, p.orig.}\DecValTok{6}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{grid.arrange}\NormalTok{(p.orig.}\DecValTok{7}\NormalTok{, p.orig.}\DecValTok{8}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{grid.arrange}\NormalTok{(p.orig.}\DecValTok{9}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{1}\NormalTok{)}
+\KeywordTok{qqnorm}\NormalTok{(full.model}\OperatorTok{$}\NormalTok{residuals)}
+\KeywordTok{qqline}\NormalTok{(full.model}\OperatorTok{$}\NormalTok{residuals)}
+\NormalTok{y <-}\StringTok{ }\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{MORTALITY}
+\NormalTok{X <-}\StringTok{ }\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{NONWHITE}
+\NormalTok{x <-}\StringTok{ }\NormalTok{X }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(X)}
+\NormalTok{x2 <-}\StringTok{ }\NormalTok{x}\OperatorTok{^}\DecValTok{2}
+
+\NormalTok{fit.nonw <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{NONWHITE, }\DataTypeTok{data=}\NormalTok{Mortality.corr) }
+\NormalTok{fit.nonw.poly <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y}\OperatorTok{~}\NormalTok{x}\OperatorTok{+}\NormalTok{x2)}
+
+\KeywordTok{plot}\NormalTok{(Mortality.corr}\OperatorTok{$}\NormalTok{NONWHITE, Mortality.corr}\OperatorTok{$}\NormalTok{MORTALITY, }
+     \DataTypeTok{ylab=}\StringTok{'Mortality (deaths per 100,000)'}\NormalTok{, }
+     \DataTypeTok{xlab=}\StringTok{'Nonwhite Population Percentage'}\NormalTok{, }\DataTypeTok{main=}\StringTok{''}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(X, fit.nonw}\OperatorTok{$}\NormalTok{fitted.values, }\DataTypeTok{type=}\StringTok{'l'}\NormalTok{, }\DataTypeTok{col=}\StringTok{'blue'}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(X[}\KeywordTok{order}\NormalTok{(x)], fit.nonw.poly}\OperatorTok{$}\NormalTok{fitted.values[}\KeywordTok{order}\NormalTok{(x)], }\DataTypeTok{type=}\StringTok{'l'}\NormalTok{, }\DataTypeTok{col=}\StringTok{'red'}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{MORTALITY}
+\NormalTok{X1 <-}\StringTok{ }\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{SO2}
+\NormalTok{x1 <-}\StringTok{ }\NormalTok{X1 }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(X1)}
+\NormalTok{x2.}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\NormalTok{(x1)}\OperatorTok{^}\DecValTok{2}
+
+\NormalTok{fit.SO2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{SO2, }\DataTypeTok{data=}\NormalTok{Mortality.corr) }
+\NormalTok{fit.SO2.poly <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y}\OperatorTok{~}\NormalTok{x1}\OperatorTok{+}\NormalTok{x2.}\DecValTok{1}\NormalTok{)}
+
+\KeywordTok{plot}\NormalTok{(Mortality.corr}\OperatorTok{$}\NormalTok{SO2, Mortality.corr}\OperatorTok{$}\NormalTok{MORTALITY, }
+     \DataTypeTok{ylab=}\StringTok{'Mortality (deaths per 100,000)'}\NormalTok{, }\DataTypeTok{xlab=}\StringTok{'Relative Pollution }
+\StringTok{     Potential of sulphur dioxide'}\NormalTok{, }\DataTypeTok{main=}\StringTok{''}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(X1, fit.SO2}\OperatorTok{$}\NormalTok{fitted.values, }\DataTypeTok{type=}\StringTok{'l'}\NormalTok{, }\DataTypeTok{col=}\StringTok{'blue'}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(X1[}\KeywordTok{order}\NormalTok{(x1)], fit.SO2.poly}\OperatorTok{$}\NormalTok{fitted.values[}\KeywordTok{order}\NormalTok{(x1)], }\DataTypeTok{type=}\StringTok{'l'}\NormalTok{, }\DataTypeTok{col=}\StringTok{'red'}\NormalTok{)}
+\NormalTok{new.model <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(MORTALITY }\OperatorTok{~}\StringTok{ }\NormalTok{PRECIP}\OperatorTok{+}\NormalTok{EDUC}\OperatorTok{+}\NormalTok{x}\OperatorTok{+}\NormalTok{x2}\OperatorTok{+}\NormalTok{POOR}\OperatorTok{+}\NormalTok{NOX}\OperatorTok{+}\NormalTok{x1}\OperatorTok{+}\NormalTok{x2.}\DecValTok{1}\NormalTok{, }\DataTypeTok{data=}\NormalTok{Mortality.corr)}
+\KeywordTok{xtable}\NormalTok{(}\KeywordTok{summary}\NormalTok{(new.model))}
+\KeywordTok{xtable}\NormalTok{(}\KeywordTok{anova}\NormalTok{(new.model))}
+
+\CommentTok{# plot of observed Y values vs. fitted Y values}
+\NormalTok{p.}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(new.model, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{new.model}\OperatorTok{$}\NormalTok{fitted.values,}
+                           \DataTypeTok{y=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{MORTALITY)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Y values against fitted Y values"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Fitted Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{)}
+
+\CommentTok{# plot of residuals vs. fitted Y values}
+\NormalTok{p.}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(new.model, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{new.model}\OperatorTok{$}\NormalTok{fitted.values,}
+                           \DataTypeTok{y=}\NormalTok{new.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against fitted Y values"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Fitted Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{)}
+
+\CommentTok{# plot of residuals vs. predictor variables}
+\NormalTok{p.}\DecValTok{3}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(new.model, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{PRECIP, }
+                           \DataTypeTok{y=}\NormalTok{new.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Mean Annual Precipitation}\CharTok{\textbackslash{}n}\StringTok{ (in inches))"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against}\CharTok{\textbackslash{}n}\StringTok{ Mean Annual Precipitation"}\NormalTok{)}
+
+\NormalTok{p.}\DecValTok{4}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(new.model, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{EDUC,}
+                           \DataTypeTok{y=}\NormalTok{new.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Median Number school years completed}\CharTok{\textbackslash{}n}\StringTok{ by persons age 25 or over"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Median Number}\CharTok{\textbackslash{}n}\StringTok{ School Years completed by}\CharTok{\textbackslash{}n}\StringTok{ Persons 25}
+\StringTok{or older"}\NormalTok{)}
+
+\NormalTok{p.}\DecValTok{5}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(new.model, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{NONWHITE,}
+                           \DataTypeTok{y=}\NormalTok{new.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Percentage of Population}\CharTok{\textbackslash{}n}\StringTok{ that is Nonwhite (in 1960)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Nonwhite}\CharTok{\textbackslash{}n}\StringTok{ Population Proportion"}\NormalTok{)}
+
+\NormalTok{p.}\DecValTok{6}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{NOX,}
+                           \DataTypeTok{y=}\NormalTok{new.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Relative Pollution Potential}\CharTok{\textbackslash{}n}\StringTok{ of Nitrogen Oxides"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Relative}\CharTok{\textbackslash{}n}\StringTok{ Pollution Potential of}\CharTok{\textbackslash{}n}\StringTok{ Nitrogen Oxides"}\NormalTok{)}
+
+\NormalTok{p.}\DecValTok{7}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(Mortality.corr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr}\OperatorTok{$}\NormalTok{SO2,}
+                           \DataTypeTok{y=}\NormalTok{new.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Relative Pollution Potential}\CharTok{\textbackslash{}n}\StringTok{ of Sulphur Dioxide"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Residuals of Observed Mortality}\CharTok{\textbackslash{}n}\StringTok{ (in deaths per 100,000 people)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residuals against Relative}\CharTok{\textbackslash{}n}\StringTok{ Pollution Potential of}\CharTok{\textbackslash{}n}\StringTok{ Sulphur Dioxide"}\NormalTok{)}
+
+\CommentTok{# histogram of residuals}
+\NormalTok{p.}\DecValTok{8}\NormalTok{ <-}\StringTok{ }\NormalTok{new.model }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{new.model}\OperatorTok{$}\NormalTok{residuals)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth=}\DecValTok{10}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Histogram of Residuals of Mortality"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Residuals (in deaths per 100,000 population)"}\NormalTok{)}
+
+\KeywordTok{grid.arrange}\NormalTok{(p.}\DecValTok{1}\NormalTok{, p.}\DecValTok{2}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{grid.arrange}\NormalTok{(p.}\DecValTok{3}\NormalTok{, p.}\DecValTok{4}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{grid.arrange}\NormalTok{(p.}\DecValTok{5}\NormalTok{, p.}\DecValTok{6}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{grid.arrange}\NormalTok{(p.}\DecValTok{7}\NormalTok{, p.}\DecValTok{8}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+
+\CommentTok{#QQplot of residuals}
+\KeywordTok{qqnorm}\NormalTok{(new.model}\OperatorTok{$}\NormalTok{residuals)}
+\KeywordTok{qqline}\NormalTok{(new.model}\OperatorTok{$}\NormalTok{residuals)}
+\CommentTok{# Conduct all subsets regression on non-linearity term full model}
+\NormalTok{Mortality.corr <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(Mortality.corr, }\DataTypeTok{x_nonw=}\NormalTok{x, }
+                         \DataTypeTok{x2_nonw=}\NormalTok{x2, }\DataTypeTok{x_so2=}\NormalTok{x1, }\DataTypeTok{x2_so2x=}\NormalTok{x2.}\DecValTok{1}\NormalTok{)}
+\NormalTok{Mortality.corr.new <-}\StringTok{ }\NormalTok{Mortality.corr[,}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{)]}
+
+\NormalTok{selection <-}\StringTok{ }\KeywordTok{leaps}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Mortality.corr.new[,}\OperatorTok{-}\DecValTok{1}\NormalTok{],}
+                   \DataTypeTok{y=}\NormalTok{Mortality.corr.new[,}\DecValTok{1}\NormalTok{], }\DataTypeTok{method =} \StringTok{'Cp'}\NormalTok{)}
+\NormalTok{index <-}\StringTok{ }\KeywordTok{order}\NormalTok{(selection}\OperatorTok{$}\NormalTok{Cp, }\DataTypeTok{decreasing =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{index.values <-}\StringTok{ }\KeywordTok{sort}\NormalTok{(selection}\OperatorTok{$}\NormalTok{Cp, }\DataTypeTok{decreasing =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{best.models <-}\StringTok{ }\NormalTok{selection}\OperatorTok{$}\NormalTok{which[index, ]}
+
+\CommentTok{# Forward Selection}
+\KeywordTok{xtable}\NormalTok{(}\KeywordTok{step}\NormalTok{(}\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\DecValTok{1}\NormalTok{, }\DataTypeTok{data=}\NormalTok{Mortality.corr),}
+     \OperatorTok{~}\NormalTok{PRECIP}\OperatorTok{+}\NormalTok{EDUC}\OperatorTok{+}\NormalTok{x}\OperatorTok{+}\NormalTok{x2}\OperatorTok{+}\NormalTok{POOR}\OperatorTok{+}\NormalTok{NOX}\OperatorTok{+}\NormalTok{x1}\OperatorTok{+}\NormalTok{x2.}\DecValTok{1}\NormalTok{, }\DataTypeTok{direction =} \StringTok{'forward'}\NormalTok{))}
+
+\CommentTok{# Backward Selection}
+\KeywordTok{xtable}\NormalTok{(}\KeywordTok{step}\NormalTok{(}\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\NormalTok{PRECIP}\OperatorTok{+}\NormalTok{EDUC}\OperatorTok{+}\NormalTok{x}\OperatorTok{+}\NormalTok{x2}\OperatorTok{+}\NormalTok{POOR}\OperatorTok{+}\NormalTok{NOX}\OperatorTok{+}\NormalTok{x1}\OperatorTok{+}\NormalTok{x2.}\DecValTok{1}\NormalTok{, }\DataTypeTok{data=}\NormalTok{Mortality.corr),}
+     \OperatorTok{~}\DecValTok{1}\NormalTok{, }\DataTypeTok{direction =} \StringTok{'backward'}\NormalTok{))}
+
+\CommentTok{# Forward Stepwise}
+\KeywordTok{xtable}\NormalTok{(}\KeywordTok{step}\NormalTok{(}\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\DecValTok{1}\NormalTok{, }\DataTypeTok{data=}\NormalTok{Mortality.corr),}
+     \OperatorTok{~}\NormalTok{PRECIP}\OperatorTok{+}\NormalTok{EDUC}\OperatorTok{+}\NormalTok{x}\OperatorTok{+}\NormalTok{x2}\OperatorTok{+}\NormalTok{POOR}\OperatorTok{+}\NormalTok{NOX}\OperatorTok{+}\NormalTok{x1}\OperatorTok{+}\NormalTok{x2.}\DecValTok{1}\NormalTok{, }\DataTypeTok{direction =} \StringTok{'both'}\NormalTok{))}
+
+\CommentTok{# Backward Stepwise}
+\KeywordTok{xtable}\NormalTok{(}\KeywordTok{step}\NormalTok{(}\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\NormalTok{PRECIP}\OperatorTok{+}\NormalTok{EDUC}\OperatorTok{+}\NormalTok{x}\OperatorTok{+}\NormalTok{x2}\OperatorTok{+}\NormalTok{POOR}\OperatorTok{+}\NormalTok{NOX}\OperatorTok{+}\NormalTok{x1}\OperatorTok{+}\NormalTok{x2.}\DecValTok{1}\NormalTok{, }\DataTypeTok{data=}\NormalTok{Mortality.corr),}
+     \OperatorTok{~}\DecValTok{1}\NormalTok{, }\DataTypeTok{direction =} \StringTok{'both'}\NormalTok{))}
+\CommentTok{# partial R^2 calculation from adding NONWHITE quadratic term to "Best" model}
+\NormalTok{best.reduced.NON <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\NormalTok{PRECIP}\OperatorTok{+}\NormalTok{EDUC}\OperatorTok{+}\NormalTok{x}\OperatorTok{+}\NormalTok{x1, }\DataTypeTok{data=}\NormalTok{Mortality.corr)}
+\NormalTok{best.full.NON <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\NormalTok{PRECIP}\OperatorTok{+}\NormalTok{EDUC}\OperatorTok{+}\NormalTok{x}\OperatorTok{+}\NormalTok{x2}\OperatorTok{+}\NormalTok{x1, }\DataTypeTok{data=}\NormalTok{Mortality.corr)}
+
+\NormalTok{SSE.red <-}\StringTok{ }\NormalTok{((}\KeywordTok{anova}\NormalTok{(best.reduced.NON))[}\DecValTok{5}\NormalTok{,}\DecValTok{2}\NormalTok{])}
+\NormalTok{SSE.full <-}\StringTok{ }\NormalTok{((}\KeywordTok{anova}\NormalTok{(best.full.NON))[}\DecValTok{6}\NormalTok{,}\DecValTok{2}\NormalTok{])}
+\NormalTok{partial.R2.NON <-}\StringTok{ }\NormalTok{(SSE.red}\OperatorTok{-}\NormalTok{SSE.full)}\OperatorTok{/}\NormalTok{SSE.full}
+\CommentTok{# partial R^2 calculation from adding SO2 quadratic term to the "Best" model}
+\NormalTok{best.reduced.SO2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\NormalTok{PRECIP}\OperatorTok{+}\NormalTok{EDUC}\OperatorTok{+}\NormalTok{x}\OperatorTok{+}\NormalTok{x1, }\DataTypeTok{data=}\NormalTok{Mortality.corr)}
+\NormalTok{best.full.SO2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(MORTALITY}\OperatorTok{~}\NormalTok{PRECIP}\OperatorTok{+}\NormalTok{EDUC}\OperatorTok{+}\NormalTok{x}\OperatorTok{+}\NormalTok{x2.}\DecValTok{1}\OperatorTok{+}\NormalTok{x1, }\DataTypeTok{data=}\NormalTok{Mortality.corr)}
+
+\NormalTok{SSE.red <-}\StringTok{ }\NormalTok{((}\KeywordTok{anova}\NormalTok{(best.reduced.SO2))[}\DecValTok{5}\NormalTok{,}\DecValTok{2}\NormalTok{])}
+\NormalTok{SSE.full <-}\StringTok{ }\NormalTok{((}\KeywordTok{anova}\NormalTok{(best.full.SO2))[}\DecValTok{6}\NormalTok{,}\DecValTok{2}\NormalTok{])}
+\NormalTok{partial.R2.SO2 <-}\StringTok{ }\NormalTok{(SSE.red}\OperatorTok{-}\NormalTok{SSE.full)}\OperatorTok{/}\NormalTok{SSE.full}
+\CommentTok{# ref.label=knitr::all_labels(),echo=TRUE,eval=FALSE}
+
+\CommentTok{# code to put everything at the appendix. but still need echo=F in each code}
+\CommentTok{# block tho. }
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}
